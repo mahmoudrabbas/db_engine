@@ -18,6 +18,6 @@ db_list=("$DB_DIR"/*)
 if [[ ${#db_list[@]} -eq 0 ]]; then
     echo "no databases to show"
 else
-    ls "$DB_DIR"
+    ls -1 "$DB_DIR"
 fi
 exit 0
