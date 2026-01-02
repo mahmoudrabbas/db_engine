@@ -97,7 +97,7 @@ for ((i=1; i<=fields_num; i++)); do
         esac
     done
 
-    row_name+="$column_name:$column_type:"
+    row_name+="$column_name:$choice:"
 done
 
 
