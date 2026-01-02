@@ -1,7 +1,7 @@
 #!/bin/bash
 
 DB_DIR="$1"
-SCRIPTS_DIR="$2"
+#SCRIPTS_DIR="$2"
 if [[ ! -d "$DB_DIR" ]]; then
     echo "Database directory doesnt exist"
     exit 1
@@ -27,7 +27,6 @@ do
     fi
 done
 
-cd - &>/dev/null
 
 
 PS3="Select from table menu: "
@@ -36,31 +35,31 @@ do
     case $choice in
     "Create table" )
         echo "creating table"
-        "$SCRIPTS_DIR/create_table.sh"
+        "../../scripts/create_table.sh"
         ;;
     "List table" )
         echo "Listing table"
-        "$SCRIPTS_DIR/list_table.sh"
+        "../..//list_table.sh"
         ;;
     "Drop table" )
         echo "Drop table"
-        "$SCRIPTS_DIR/drop_table.sh"
+        "../..//drop_table.sh"
         ;;
     "Insert row" )
         echo "Inserting row"
-        "$SCRIPTS_DIR/insert_row.sh"
+        "../../insert_row.sh"
         ;;
     "Show data" )
         echo "Showing data"
-        "$SCRIPTS_DIR/show_data.sh"
+        "$../../show_data.sh"
         ;;
     "Delete row" )
         echo "Deleting row"
-        "$SCRIPTS_DIR/delete_row.sh"
+        "../../delete_row.sh"
         ;;
     "Update cell" )
         echo "Updating cell"
-        "$SCRIPTS_DIR/update_cell.sh"
+        "../../update_cell.sh"
         ;;
     "Exit" )
         exit 1
@@ -73,3 +72,5 @@ done
 
 
 
+
+cd - &>/dev/null
