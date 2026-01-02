@@ -13,7 +13,7 @@ shopt -s nullglob
 
 db_list=("$DB_DIR"/*)
 
-#echo ${#db_list[@]}
+# echo ${#db_list[@]}
 
 if [[ ${#db_list[@]} -eq 0 ]]; then
     echo "no databases to show"

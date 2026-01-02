@@ -18,7 +18,7 @@ do
         ;;
 
     CONNECT_DB )
-         "$SCRIPTS_DIR/connect_db.sh" "$DB_DIR"
+         "$SCRIPTS_DIR/connect_db.sh" "$DB_DIR" "$SCRIPTS_DIR"
         ;;
 
     DROP_DB )
