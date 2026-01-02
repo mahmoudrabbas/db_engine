@@ -51,7 +51,7 @@ do
         ;;
     "Show data" )
         echo "Showing data"
-        "$../../scripts/show_data.sh"
+        "../../scripts/show_data.sh"
         ;;
     "Delete row" )
         echo "Deleting row"
