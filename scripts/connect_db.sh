@@ -39,27 +39,27 @@ do
         ;;
     "List table" )
         echo "Listing table"
-        "../..//list_table.sh"
+        "../../scripts/list_table.sh"
         ;;
     "Drop table" )
         echo "Drop table"
-        "../..//drop_table.sh"
+        "../../scripts/drop_table.sh"
         ;;
     "Insert row" )
         echo "Inserting row"
-        "../../insert_row.sh"
+        "../../scripts/insert_row.sh"
         ;;
     "Show data" )
         echo "Showing data"
-        "$../../show_data.sh"
+        "$../../scripts/show_data.sh"
         ;;
     "Delete row" )
         echo "Deleting row"
-        "../../delete_row.sh"
+        "../../scripts/delete_row.sh"
         ;;
     "Update cell" )
         echo "Updating cell"
-        "../../update_cell.sh"
+        "../../scripts/update_cell.sh"
         ;;
     "Exit" )
         exit 1
