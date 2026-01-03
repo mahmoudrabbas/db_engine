@@ -1,7 +1,5 @@
 #!/bin/bash
 
-echo "Hello from deleting row"
-
 shopt -s nullglob
 
 tables=(*)
@@ -13,33 +11,41 @@ fi
 
 PS3="Select table to delete row from: "
 select tbl in "${tables[@]}"; do
-    if [[ -z "$tbl" ]]; then
-        echo "Invalid choice"
-    else
-        break
-    fi
+    [[ -n "$tbl" ]] && break
+    echo "Invalid choice"
 done
 
-num_rows=$(wc -l < "$tbl")
-if [[ $num_rows -le 1 ]]; then
+data_count=$(awk 'NR>1 && NF>0' "$tbl" | wc -l)
+
+if [[ $data_count -eq 0 ]]; then
     echo "Table is empty, nothing to delete"
     exit 0
 fi
 
 echo "---------------------------"
-awk -F":" 'NR==1 {next} {printf "%d) ", NR-1; for(i=1;i<=NF;i++) printf "%-15s",$i; print ""}' "$tbl"
+awk -F":" '
+NR==1 { next }
+NF>0 {
+    printf "%d) ", ++i
+    for (j=1; j<=NF; j++)
+        printf "%-15s", $j
+    print ""
+}
+' "$tbl"
 echo "---------------------------"
 
 while true; do
     read -p "Enter the row number to delete: " row_num
-    if [[ ! $row_num =~ ^[0-9]+$ ]] || (( row_num < 1 )) || (( row_num >= num_rows )); then
-        echo "Invalid row number, try again"
-    else
+    if [[ $row_num =~ ^[0-9]+$ ]] && (( row_num >= 1 && row_num <= data_count )); then
         break
     fi
+    echo "Invalid row number, try again"
 done
 
-# delete roe
-# - NR==row_num+1 because NR counts from 1 and includes header
-awk -v del="$((row_num+1))" 'NR!=del {print}' "$tbl" > tmpfile && mv tmpfile "$tbl"
+awk -v del="$row_num" '
+NR==1 { print; next }
+NF>0 { count++ }
+count != del { print }
+' "$tbl" > tmpfile && mv tmpfile "$tbl"
 
+echo "Row $row_num deleted successfully"

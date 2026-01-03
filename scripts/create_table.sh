@@ -1,11 +1,23 @@
 #!/bin/bash
 
-echo "Hello from creating table"
-echo "Already existing tables"
-ls
+
+shopt -s nullglob
+
+tables=(*)
+
+if [[ ${#tables[@]} -eq 0 ]]; then
+    echo -e "\033[31mNo tables to show\033[0m"
+else 
+    echo "------ Already existing tables ------" 
+    ls -1 | awk '{print NR") " $0}'
+fi
+
+
+
 
 #table name
 while true; do
+    echo "-------------------------------------"
     read -p "Enter your table name to create: " table_name
 
     case "$table_name" in
@@ -25,8 +37,8 @@ while true; do
             if [[ -e "$table_name" ]]; then
                 echo "Table already exists"
             else
-                touch "$table_name"
-                echo "Table created successfully"
+                # touch "$table_name"
+                # echo "Table created successfully"
                 break
             fi
             ;;
@@ -35,6 +47,7 @@ done
 
 #//number of fields
 while true; do
+    echo "-------------------------------------"
     read -p "Insert num of fields for $table_name table: " fields_num
 
     case "$fields_num" in
@@ -56,6 +69,7 @@ row_name=""
 
 for ((i=1; i<=fields_num; i++)); do
     while true; do
+        echo "-------------------------------------"
         read -p "Enter name of column No. $i: " column_name
 
         case "$column_name" in
@@ -81,6 +95,7 @@ for ((i=1; i<=fields_num; i++)); do
         esac
     done
 
+    echo "-------------------------------------"
     PS3="Enter type of column $column_name: "
     select choice in integer string
         do
@@ -102,4 +117,4 @@ done
 
 
 echo "$row_name" >> "$table_name"
-echo "Table data is created successfully"
+echo -e "\033[35mTable $table_name is created successfully\033[0m"

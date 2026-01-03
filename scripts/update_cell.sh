@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "Hello from updating cell"
+# echo "Hello from updating cell"
 
 shopt -s nullglob
 

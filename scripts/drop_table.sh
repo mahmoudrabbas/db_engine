@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "Hello from dropping table"
+# echo "Hello from dropping table"
 
 # DB_DIR="$1"
 
@@ -9,7 +9,7 @@ shopt -s nullglob
 tbls=("."/*)
 
 if [[ ${#tbls[@]} -eq 0 ]]; then
-    echo "No tables to drop"
+    echo -e "\033[31mNo tables to drop\033[0m"
     exit 0
 fi
 
@@ -21,7 +21,7 @@ do
     [[ -f "$tbl" ]] && tables+=("$(basename "$tbl")")
 done
 
-PS3="Select table to drop: "
+PS3=$'------------------------------\033[32m\nSelect table to drop: \033[0m'
 select t in "${tables[@]}";
 do
     case $t in
@@ -32,7 +32,7 @@ do
     *)
         if [[ ! -f $t ]]
         then 
-            echo "Table doesnt exist"
+            echo "Sorry, Table doesnt exist"
             continue
         else
             rm "$t"

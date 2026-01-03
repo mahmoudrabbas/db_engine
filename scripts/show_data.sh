@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "Hello from showing data"
+# echo "Hello from showing data"
 
 shopt -s nullglob
 
@@ -12,7 +12,7 @@ if [[ ${#tables[@]} -eq 0 ]]; then
 fi
 
 
-PS3="Select table to show data: "
+PS3=$'------------------------------\n\033[34mSelect table to show data: \033[0m'
 select tbl in "${tables[@]}"; do
     if [[ -z "$tbl" ]]; then
         echo "Invalid choice"
@@ -26,19 +26,18 @@ header=$(awk 'NR==1 {print}' "$tbl")
 IFS=":" read -ra cols <<< "$header"
 
 
-echo "------------------------"
+echo "------------------------------"
 for ((i=0; i<${#cols[@]}; i+=2)); do
-    printf "%-10s |" "${cols[i]}"
+    printf "%-13s |" "${cols[i]}"
 done
 echo
-echo "------------------------"
+echo "------------------------------"
 
 
 tail -n +2 "$tbl" | while IFS=":" read -ra row; do
     for((i=0; i<${#row[@]}; i++))
         do
-            printf "%-10s |" "${row[i]}"
+            printf "%-13s |" "${row[i]}"
         done
         echo
     done
-echo "------------------------"

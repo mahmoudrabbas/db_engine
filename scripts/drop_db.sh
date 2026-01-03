@@ -3,27 +3,28 @@
 
 DB_DIR="$1"
 
-PS3="type the db number to drop:"
 
 if [[ ! -d "$DB_DIR" ]]; then
-    echo "Database directory doesnt exist"
+    echo -e "\033[31mDatabase directory doesnt exist\033[0m"
     exit 1
 fi
 
 arr=()
 for db in "$DB_DIR"/*; do
-    [[ -d "$db" ]] && arr+=("${db##*/}")
+    [[ -d "$db" ]] && arr+=("$(basename "$db")")
 done
 
 if [[ ${#arr[@]} -eq 0 ]]; then
-    echo "no db to drop"
+    echo -e "\033[31mNo databases to drop\033[0m"
     exit 0
 fi
+
+PS3=$'------------------------------\n\033[31mType Database Number To Drop: \033[0m'
 
 select choice in "${arr[@]}"
 do
     if [[ -z "$choice" ]]; then
-        echo "$REPLY not on the menu"
+        echo "$REPLY Not On The Menu"
         continue
     fi
     rm -r "$DB_DIR/$choice"

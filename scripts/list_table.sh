@@ -1,7 +1,5 @@
 #!/bin/bash
 
-echo "Hello from listing table"
-
 shopt -s nullglob
 
 tables=(*)

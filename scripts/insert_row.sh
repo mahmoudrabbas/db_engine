@@ -1,18 +1,16 @@
 #!/bin/bash
 
-echo "Hello from inserting row"
-
 shopt -s nullglob
 
 tables=(*)
 
 if [[ ${#tables[@]} -eq 0 ]]; then
-    echo "Not tables to insert in"
+    echo -e "\033[31mNo tables to insert into\033[0m"
     exit 0
 fi
 
 
-PS3="Select table to insert into: "
+PS3=$'------------------------------\033[31m\nSelect table to insert into: \033[0m'
 select tbl in "${tables[@]}"
 do
     if [[ -z "$tbl" ]]; then
@@ -23,7 +21,7 @@ do
 done
 
 
-hheader=$(awk 'NR==1 {print}' "$tbl")
+header=$(awk 'NR==1 {print}' "$tbl")
 
 IFS=":" read -ra cols <<< "$header"
 
@@ -49,4 +47,4 @@ for ((i=0; i<${#cols[@]}; i+=2)); do
 done
 
 echo "$row" >> "$tbl"
-echo "Row inserted successfully"
+echo -e "\033[35mRow inserted successfully\033[0m"

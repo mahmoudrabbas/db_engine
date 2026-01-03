@@ -3,30 +3,31 @@
 DB_DIR="$1"
 
 if [[ ! -d "$DB_DIR" ]]; then
-    echo "Database directory doesnt exist"
+    echo -e "\033[31mDatabase directory doesnt exist\033[0m"
     exit 1
 fi
 
 
-echo "enter database name:"
+echo -e "\033[34mEnter Database Name To Create:\033[0m"
 read -r db_name
+echo "------------------------------"
 
 if [[ -z "$db_name" ]]; then
-    echo "Database name cannot be empty"
+    echo  -e "\033[31mDatabase name cannot be empty\033[0m"
     exit 1
 fi
 
 if [[ ! "$db_name" =~ ^[a-zA-Z][a-zA-Z0-9_]*$ ]]; then
-    echo "invalid name"
+    echo -e "\033[31mInvalid name\033[0m"
     exit 1
 fi
 
 
 if [[ -d "$DB_DIR/$db_name" ]]; then
-    echo "Database already exists"
+    echo -e "\033[31mSorry, Database already exists\033[0m"
     exit 1
 fi
 
 mkdir "$DB_DIR/$db_name"
-echo "Database $db_name created successfully"
+echo -e "\033[34mDatabase <$db_name> created successfully\033[0m"
 
