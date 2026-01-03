@@ -1,0 +1,9 @@
+[cread_db file]
+= read -r => read raw input as it is dont explain slashes /
+
+
+[drop_db file]
+= arr+=("${db##*/}") => paramter expansion شيل اطول حاجة لحد اخر /
+= arr+=("$(basename "$db")") => هات اسم الفولدر من غير الباص كامل
+
+
