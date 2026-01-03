@@ -23,7 +23,7 @@ do
 done
 
 
-header=$(awk 'NR==1 {print}' $tbl)
+hheader=$(awk 'NR==1 {print}' "$tbl")
 
 IFS=":" read -ra cols <<< "$header"
 
@@ -37,18 +37,16 @@ for ((i=0; i<${#cols[@]}; i+=2)); do
         read -p "Enter $column_type value for $column_name: " value
 
         if [[ "$column_type" == "integer" ]]; then
-            [[ $value =~ ^[0-9]+$ ]] && break
-            echo "Invalid value"
-        else 
-            [[ -n "$value" ]] && break
-            echo "String cant be empty"
+            [[ "$value" =~ ^[0-9]+$ ]] && break
+            echo "Invalid integer value"
+        else
+            [[ "$value" =~ ^[a-zA-Z]+$ ]] && break
+            echo "String must contain letters only"
         fi
     done
 
     row+="$value:"
-
 done
 
 echo "$row" >> "$tbl"
-
 echo "Row inserted successfully"
