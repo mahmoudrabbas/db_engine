@@ -40,7 +40,7 @@ for ((i=0; i<${#cols[@]}; i+=2)); do
             [[ $value =~ ^[0-9]+$ ]] && break
             echo "Invalid value"
         else 
-            [[ -n "$value" ]] && break
+            [[ -n "$value" && $value =~  ]] && break
             echo "String cant be empty"
         fi
     done
