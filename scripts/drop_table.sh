@@ -26,17 +26,17 @@ select t in "${tables[@]}";
 do
     case $t in
     "") 
-    echo "Invalid choice, try again!"
+    echo -e "\033[31mInvalid choice, try again!\033[0m"
     continue
     ;;
     *)
         if [[ ! -f $t ]]
         then 
-            echo "Sorry, Table doesnt exist"
+            echo -e "\033[31mSorry, Table doesnt exist\033[0m"
             continue
         else
             rm "$t"
-            echo "Table '$t' deleted"
+            echo -e "\033[34mTable '$t' deleted\033[0m"
             break
         fi
     esac
