@@ -9,7 +9,7 @@ if [[ ${#tables[@]} -eq 0 ]]; then
     exit 0
 fi
 
-PS3="Select table to delete row from: "
+PS3=$'------------------------------\n\033[32mSelect table to delete row from: \033[0m'
 select tbl in "${tables[@]}"; do
     [[ -n "$tbl" ]] && break
     echo "Invalid choice"
@@ -18,7 +18,7 @@ done
 data_count=$(awk 'NR>1 && NF>0' "$tbl" | wc -l)
 
 if [[ $data_count -eq 0 ]]; then
-    echo "Table is empty, nothing to delete"
+    echo -e "\033[31mTable is empty, nothing to delete\033[0m"
     exit 0
 fi
 
@@ -48,4 +48,4 @@ NF>0 { count++ }
 count != del { print }
 ' "$tbl" > tmpfile && mv tmpfile "$tbl"
 
-echo "Row $row_num deleted successfully"
+echo "\033[35mRow $row_num deleted successfully\033[0m"

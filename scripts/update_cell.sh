@@ -7,14 +7,14 @@ shopt -s nullglob
 tables=(*)
 
 if [[ ${#tables[@]} -eq 0 ]]; then
-    echo "No tables found"
+    echo -e "\n\033[32mNo tables found\n\033[32m"
     exit 0
 fi
 
-PS3="Select table to update: "
+PS3=$'---------------------------\n\033[32mSelect table to update: \033[0m'
 select tbl in "${tables[@]}"; do
     if [[ -z "$tbl" ]]; then
-        echo "Invalid choice"
+        echo -e "\n\033[31mInvalid choice\n\033[0m"
     else
         break
     fi
@@ -22,7 +22,7 @@ done
 
 num_rows=$(wc -l < "$tbl")
 if [[ $num_rows -le 1 ]]; then
-    echo "Table is empty, nothing to update"
+    echo -e "\n\033[31mTable is empty, nothing to update\n\033[0m"
     exit 0
 fi
 
@@ -36,7 +36,7 @@ echo "---------------------------"
 while true; do
     read -p "Enter the row number to update: " row_num
     if [[ ! $row_num =~ ^[0-9]+$ ]] || (( row_num < 1 )) || (( row_num >= num_rows )); then
-        echo "Invalid row number, try again"
+        echo -e "\n\033[32mInvalid row number, try again\n\033[0m"
     else
         break
     fi
@@ -64,10 +64,10 @@ while true; do
     read -p "Enter new $col_type value for $col_name: " new_value
     if [[ "$col_type" == "integer" ]]; then
         [[ $new_value =~ ^[0-9]+$ ]] && break
-        echo "Invalid value: must be integer"
+        echo -e "\033[31mInvalid value: must be integer\033[0m"
     else
-        [[ -n "$new_value" ]] && break
-        echo "String can't be empty"
+         [[ "$value" =~ ^[a-zA-Z]+$ ]] && break
+        echo -e "\033[31mString must contain letters only\033[0m"
     fi
 done
 
@@ -76,4 +76,4 @@ awk -F":" -v row="$((row_num+1))" -v col="$((col_index+1))" -v val="$new_value" 
     print $0
 }' OFS=":" "$tbl" > tmpfile && mv tmpfile "$tbl"
 
-echo "Row $row_num, column $col_name updated successfully"
+echo "\033[35mRow $row_num, column $col_name updated successfully\033[0m"

@@ -22,12 +22,21 @@ if [[ ! "$db_name" =~ ^[a-zA-Z][a-zA-Z0-9_]*$ ]]; then
     exit 1
 fi
 
+# if [[ -d "$db_name" ]]
+#     then echo "Data
+
+shopt -s nocaseglob
 
 if [[ -d "$DB_DIR/$db_name" ]]; then
     echo -e "\033[31mSorry, Database already exists\033[0m"
+    shopt -u nocaseglob
     exit 1
 fi
 
+shopt -u nocaseglob
+
+
+
 mkdir "$DB_DIR/$db_name"
-echo -e "\033[34mDatabase <$db_name> created successfully\033[0m"
+echo -e "\033[35mDatabase <$db_name> created successfully\033[0m"
 
