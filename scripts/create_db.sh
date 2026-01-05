@@ -2,7 +2,7 @@
 
 DB_DIR="$1"
 
-if [[ ! -d "$DB_DIR" ]]; then
+if [ ! -d "$DB_DIR" ]; then
     echo -e "\033[31mDatabase directory doesnt exist\033[0m"
     exit 1
 fi
